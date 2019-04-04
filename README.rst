@@ -1,13 +1,13 @@
-flatten-dict
+dict_json
 ============
-.. image:: https://img.shields.io/travis/ianlini/flatten-dict/master.svg
-   :target: https://travis-ci.org/ianlini/flatten-dict
-.. image:: https://img.shields.io/pypi/v/flatten-dict.svg
-   :target: https://pypi.python.org/pypi/flatten-dict
-.. image:: https://img.shields.io/pypi/l/flatten-dict.svg
-   :target: https://pypi.python.org/pypi/flatten-dict
+.. image:: https://img.shields.io/travis/bkuehlhorn/dict_json/master.svg
+   :target: https://travis-ci.org/bkuehlhorn/dict_json
+.. image:: https://img.shields.io/pypi/v/dict_json.svg
+   :target: https://pypi.python.org/pypi/dict_json
+.. image:: https://img.shields.io/pypi/l/dict_json.svg
+   :target: https://pypi.python.org/pypi/dict_json
 
-A flexible utility for flattening and unflattening dict-like objects in Python.
+A flexible utility for accessing nested dict and list objects in Python with single searialized key.
 
 
 Introduction
