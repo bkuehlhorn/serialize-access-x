@@ -10,7 +10,8 @@ delimiter = dict_json.DELIMITER
 
 # from .conftest import logging
 import logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.DEBUG)
 from dict_json import dict_json
 
 """
@@ -115,14 +116,14 @@ class TestGetKeys(object):
     def testGetKeysD01(self, printKeys, debug):
         d01Ks = ['k0', 'k1', 'k2']
         d01K = dict_json.getKeys(d01)
-        print(f'keys: {d01K}') # if printKeys else ''
+        print(f'keys: {d01K}') if printKeys else ''
         assert len(d01K) == len(d01Ks)
         assert d01K == d01Ks
 
     def testGetKeysD02(self, printKeys, debug):
         d02Ks = ['k0:0', 'k0:1', 'k0:2', 'k1:0', 'k1:1', 'k1:2', 'k2:k0', 'k2:k1', 'k2:k2']
         d02K = dict_json.getKeys(d02)
-        print(f'keys: {d02K}') # if printKeys else ''
+        print(f'keys: {d02K}') if printKeys else ''
         assert len(d02K) == len(d02Ks)
         assert d02K == d02Ks
 
@@ -131,7 +132,7 @@ class TestGetKeys(object):
                  ['k1', '0'], ['k1', '1'], ['k1', '2'],
                  ['k2', 'k0'], ['k2', 'k1'], ['k2', 'k2']]
         d02K = dict_json.getKeys(d02, seralize=False)
-        print(f'keys: {d02K}') # if printKeys else ''
+        print(f'keys: {d02K}') if printKeys else ''
         assert len(d02K) == len(d02Ks)
         assert d02K == d02Ks
 
