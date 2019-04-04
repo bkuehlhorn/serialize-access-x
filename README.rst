@@ -39,6 +39,37 @@ Dict Json
        :param key: string of keys with ":" DELIMITER
        :return: value of final key
        """
+Examples
+::::::::
+
+.. code-block:: python
+
+   In [1]: from dict-json import getValue
+
+   In [2]: normal_dict = {
+      ...:     'a': '0',
+      ...:     'b': {
+      ...:         'a': '1.0',
+      ...:         'b': '1.1',
+      ...:     },
+      ...:     'c': {
+      ...:         'a': '2.0',
+      ...:         'b': {
+      ...:             'a': '2.1.0',
+      ...:             'b': '2.1.1',
+      ...:         },
+      ...:     },
+      ...: }
+
+   In [3]: getValue(normal_dict, 'a')
+   Out[3]:
+
+
+   In [4]: getValue(normal_dict, 'b:a')
+   Out[4]:
+
+   In [5]: getValue(normal_dict, 'c:b:b')
+   Out[5]:
 
 .. code-block:: python
 
@@ -52,6 +83,44 @@ Dict Json
        :param value: value for last key
        :return: None
        """
+Examples
+::::::::
+
+.. code-block:: python
+
+   In [1]: from dict-json import setValue
+
+   In [2]: normal_dict = {
+      ...:     'a': '0',
+      ...:     'b': {
+      ...:         'a': '1.0',
+      ...:         'b': '1.1',
+      ...:     },
+      ...:     'c': {
+      ...:         'a': '2.0',
+      ...:         'b': {
+      ...:             'a': '2.1.0',
+      ...:             'b': '2.1.1',
+      ...:         },
+      ...:     },
+      ...: }
+
+   In [3]: setValue(normal_dict, 'a', 'newvalue')
+   Out[3]:
+   In [3]: getValue(normal_dict, 'a')
+   Out[3]:
+
+
+   In [4]: setValue(normal_dict, 'b:a', 'newvalue')
+   Out[4]:
+   In [4]: getValue(normal_dict, 'b:a')
+   Out[4]:
+
+   In [5]: setValue(normal_dict, 'c:c:b', 'newvalue newnode')
+   Out[5]:
+   In [5]: getValue(normal_dict, 'c:c:b')
+   Out[5]:
+
 .. code-block:: python
 
    def getKeys(json_dict_list, seralize=True):
@@ -69,7 +138,7 @@ Examples
 
 .. code-block:: python
 
-   In [1]: from flatten_dict import flatten
+   In [1]: from flatten_dict import getKeys
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -86,141 +155,9 @@ Examples
       ...:     },
       ...: }
 
-   In [3]: flatten(normal_dict)
+   In [3]: getKeys(normal_dict)
    Out[3]:
-   {('a',): '0',
-    ('b', 'a'): '1.0',
-    ('b', 'b'): '1.1',
-    ('c', 'a'): '2.0',
-    ('c', 'b', 'a'): '2.1.0',
-    ('c', 'b', 'b'): '2.1.1'}
 
-   In [4]: flatten(normal_dict, reducer='path')
+
+   In [3]: getKeys(normal_dict, 'list')
    Out[4]:
-   {'a': '0',
-    'b/a': '1.0',
-    'b/b': '1.1',
-    'c/a': '2.0',
-    'c/b/a': '2.1.0',
-    'c/b/b': '2.1.1'}
-
-   In [5]: flatten(normal_dict, reducer='path', inverse=True)
-   Out[5]:
-   {'0': 'a',
-    '1.0': 'b/a',
-    '1.1': 'b/b',
-    '2.0': 'c/a',
-    '2.1.0': 'c/b/a',
-    '2.1.1': 'c/b/b'}
-
-   In [6]: def underscore_reducer(k1, k2):
-      ...:     if k1 is None:
-      ...:         return k2
-      ...:     else:
-      ...:         return k1 + "_" + k2
-      ...:
-
-   In [7]: flatten(normal_dict, reducer=underscore_reducer)
-   Out[7]:
-   {'a': '0',
-    'b_a': '1.0',
-    'b_b': '1.1',
-    'c_a': '2.0',
-    'c_b_a': '2.1.0',
-    'c_b_b': '2.1.1'}
-
-Unflatten
-`````````
-
-.. code-block:: python
-
-   def unflatten(d, splitter='tuple', inverse=False):
-       """Unflatten dict-like object.
-
-       Parameters
-       ----------
-       d: dict-like object
-           The dict that will be unflattened.
-       splitter: {'tuple', 'path', function} (default: 'tuple')
-           The key splitting method. If a function is given, the function will be
-           used to split.
-           'tuple': Use each element in the tuple key as the key of the unflattened dict.
-           'path': Use ``pathlib.Path.parts`` to split keys.
-       inverse: bool (default: False)
-           Whether you want to invert the key and value before flattening.
-
-       Returns
-       -------
-       unflattened_dict: dict
-       """
-
-Examples
-::::::::
-
-.. code-block:: python
-
-   In [1]: from flatten_dict import unflatten
-
-   In [2]: flat_dict = {
-      ...:     ('a',): '0',
-      ...:     ('b', 'a'): '1.0',
-      ...:     ('b', 'b'): '1.1',
-      ...:     ('c', 'a'): '2.0',
-      ...:     ('c', 'b', 'a'): '2.1.0',
-      ...:     ('c', 'b', 'b'): '2.1.1',
-      ...: }
-
-   In [3]: unflatten(flat_dict)
-   Out[3]:
-   {'a': '0',
-    'b': {'a': '1.0', 'b': '1.1'},
-    'c': {'a': '2.0', 'b': {'a': '2.1.0', 'b': '2.1.1'}}}
-
-   In [4]: flat_dict = {
-      ...:     'a': '0',
-      ...:     'b/a': '1.0',
-      ...:     'b/b': '1.1',
-      ...:     'c/a': '2.0',
-      ...:     'c/b/a': '2.1.0',
-      ...:     'c/b/b': '2.1.1',
-      ...: }
-
-   In [5]: unflatten(flat_dict, splitter='path')
-   Out[5]:
-   {'a': '0',
-    'b': {'a': '1.0', 'b': '1.1'},
-    'c': {'a': '2.0', 'b': {'a': '2.1.0', 'b': '2.1.1'}}}
-
-   In [6]: flat_dict = {
-      ...:     '0': 'a',
-      ...:     '1.0': 'b/a',
-      ...:     '1.1': 'b/b',
-      ...:     '2.0': 'c/a',
-      ...:     '2.1.0': 'c/b/a',
-      ...:     '2.1.1': 'c/b/b',
-      ...: }
-
-   In [7]: unflatten(flat_dict, splitter='path', inverse=True)
-   Out[7]:
-   {'a': '0',
-    'b': {'a': '1.0', 'b': '1.1'},
-    'c': {'a': '2.0', 'b': {'a': '2.1.0', 'b': '2.1.1'}}}
-
-   In [8]: def underscore_splitter(flat_key):
-      ...:     return flat_key.split("_")
-      ...:
-
-   In [9]: flat_dict = {
-      ...:     'a': '0',
-      ...:     'b_a': '1.0',
-      ...:     'b_b': '1.1',
-      ...:     'c_a': '2.0',
-      ...:     'c_b_a': '2.1.0',
-      ...:     'c_b_b': '2.1.1',
-      ...: }
-
-   In [10]: unflatten(flat_dict, splitter=underscore_splitter)
-   Out[10]:
-   {'a': '0',
-    'b': {'a': '1.0', 'b': '1.1'},
-    'c': {'a': '2.0', 'b': {'a': '2.1.0', 'b': '2.1.1'}}}
