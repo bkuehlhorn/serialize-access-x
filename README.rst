@@ -26,7 +26,7 @@ It also provides some key joining methods (reducer), and you can choose the redu
 Documentation
 -------------
 
-Flatten
+Dict Json
 ```````
 
 .. code-block:: python
