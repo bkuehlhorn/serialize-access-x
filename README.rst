@@ -31,24 +31,37 @@ Flatten
 
 .. code-block:: python
 
-   def flatten(d, reducer='tuple', inverse=False):
-       """Flatten dict-like object.
+   def getValue(json_dict_list, key):
+       """
+       Key contains individual dict and list keys separated by ":"
+       Returns final value from complex key. None is returned when partial key is not found
 
-       Parameters
-       ----------
-       d: dict-like object
-           The dict that will be flattened.
-       reducer: {'tuple', 'path', function} (default: 'tuple')
-           The key joining method. If a function is given, the function will be
-           used to reduce.
-           'tuple': The resulting key will be tuple of the original keys
-           'path': Use ``os.path.join`` to join keys.
-       inverse: bool (default: False)
-           Whether you want invert the resulting key and value.
+       :param key: string of keys with ":" DELIMITER
+       :return: value of final key
+       """
 
-       Returns
-       -------
-       flat_dict: dict
+.. code-block:: python
+
+   def setValue(json_dict_list, key, value):
+       """
+       Find last key in json_dict_list from key string
+       Add [] for missing keys when next is int
+       add MyDict() for missing keys when next is not int
+
+       :param key: string of keys with ":" DELIMITER
+       :param value: value for last key
+       :return: None
+       """
+.. code-block:: python
+
+   def getKeys(json_dict_list, seralize=True):
+       """
+       get unique string of keys to values in response dict
+       list use 0 for entry
+
+       Add support to return keys as list
+
+       :return: list of all key string to access elements
        """
 
 Examples
