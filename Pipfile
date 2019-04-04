@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"pathlib2" = ">=2.3"
+pylint = "*"
+tox = "*"
+astroid = "*"
+isort = "*"
+
+[dev-packages]
+nose = "*"
+"flake8" = "*"
+pytest = "*"
+hypothesis = "*"
+yaml = "*"
+
+[requires]
+python_version = "3.7"
