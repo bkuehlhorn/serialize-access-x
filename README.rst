@@ -63,7 +63,6 @@ Examples
    In [3]: getValue(normal_dict, 'a')
    Out[3]: '0'
 
-
    In [4]: getValue(normal_dict, 'b:a')
    Out[4]: '1.0'
 
@@ -178,7 +177,6 @@ Examples
 
    In [3]: getKeys(normal_dict)
    Out[3]: ['a', 'b:a', 'b:b', 'c:a', 'c:b:a', 'c:b:b']
-
 
    In [4]: getKeys(normal_dict, seralize=False)
    Out[4]: [['a'], ['b', 'a'], ['b', 'b'], ['c', 'a'], ['c', 'b', 'a'], ['c', 'b', 'b']]
