@@ -44,7 +44,7 @@ Examples
 
 .. code-block:: python
 
-   In [1]: from dict-json import getValue
+   In [1]: from dict_json.dict_json import getValue
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -62,14 +62,18 @@ Examples
       ...: }
 
    In [3]: getValue(normal_dict, 'a')
-   Out[3]:
+   Out[3]: '0'
 
 
    In [4]: getValue(normal_dict, 'b:a')
-   Out[4]:
+   Out[4]: '1.0'
 
    In [5]: getValue(normal_dict, 'c:b:b')
-   Out[5]:
+   Out[5]: '2.1.1'
+
+   In [6]: getValue(normal_dict, ['c', 'b', 'b'])
+   Out[6]: '2.1.1'
+
 
 .. code-block:: python
 
@@ -88,7 +92,7 @@ Examples
 
 .. code-block:: python
 
-   In [1]: from dict-json import setValue
+   In [1]: from dict_json.dict_json import setValue
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -106,20 +110,17 @@ Examples
       ...: }
 
    In [3]: setValue(normal_dict, 'a', 'newvalue')
-   Out[3]:
-   In [3]: getValue(normal_dict, 'a')
-   Out[3]:
+   In [4]: normal_dict['a']
+   Out[4]: 'newvalue'
 
 
-   In [4]: setValue(normal_dict, 'b:a', 'newvalue')
-   Out[4]:
-   In [4]: getValue(normal_dict, 'b:a')
-   Out[4]:
+   In [5]: setValue(normal_dict, 'b:a', 'newvalue')
+   In [6]: normal_dict['b']['a']
+   Out[6]: 'newvalue'
 
-   In [5]: setValue(normal_dict, 'c:c:b', 'newvalue newnode')
-   Out[5]:
-   In [5]: getValue(normal_dict, 'c:c:b')
-   Out[5]:
+   In [7]: setValue(normal_dict, 'c:c:b', 'newvalue newnode')
+   In [8]: normal_dict['c']['c']['b']
+   Out[8]: 'newvalue newnode'
 
 .. code-block:: python
 
@@ -138,26 +139,27 @@ Examples
 
 .. code-block:: python
 
-   In [1]: from flatten_dict import getKeys
+   In [1]: from dict_json.dict_json import getKeys
 
    In [2]: normal_dict = {
       ...:     'a': '0',
-      ...:     'b': {
-      ...:         'a': '1.0',
-      ...:         'b': '1.1',
-      ...:     },
-      ...:     'c': {
-      ...:         'a': '2.0',
-      ...:         'b': {
-      ...:             'a': '2.1.0',
-      ...:             'b': '2.1.1',
-      ...:         },
-      ...:     },
-      ...: }
+
+   In [2]: normal_dict = {
+      ...:    'a': '0',
+      ...:    'b': {
+      ...:        'a': '1.0',
+      ...:        'b': '1.1', },
+      ...:    'c': {
+      ...:        'a': '2.0',
+      ...:        'b': {
+      ...:            'a': '2.1.0',
+      ...:            'b': '2.1.1', },
+      ...:    },
+      ...:}
 
    In [3]: getKeys(normal_dict)
-   Out[3]:
+   Out[3]: ['a', 'b:a', 'b:b', 'c:a', 'c:b:a', 'c:b:b']
 
+   In [4]: getKeys(normal_dict, seralize=False)
+   Out[4]: [['a'], ['b', 'a'], ['b', 'b'], ['c', 'a'], ['c', 'b', 'a'], ['c', 'b', 'b']]
 
-   In [3]: getKeys(normal_dict, 'list')
-   Out[4]:

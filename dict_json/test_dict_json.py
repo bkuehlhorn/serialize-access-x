@@ -10,8 +10,8 @@ delimiter = dict_json.DELIMITER
 
 # from .conftest import logging
 import logging
-logging.basicConfig(level=logging.INFO)
-# logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 from dict_json import dict_json
 
 """
@@ -63,7 +63,7 @@ d01l['d0'] = l01
 d01l['d1'] = l02
 d01l['d2'] = d02
 
-d02 = d(l01, l01, d01, n=3)
+d022 = d(l01, l01, d01, n=3)
 
 l03 = l(d02, n=2)
 l04 = l(l01, n=3)
@@ -107,6 +107,20 @@ j02s = '''
 '''
 j02Ks = ['a', 'b:0:c', 'b:0:d', 'b:1:c', 'b:1:d']
 
+normal_dict = {
+    'a': '0',
+    'b': {
+        'a': '1.0',
+        'b': '1.1',
+    },
+    'c': {
+        'a': '2.0',
+        'b': {
+            'a': '2.1.0',
+            'b': '2.1.1',
+        },
+    },
+}
 #
 # @pytest.fixture
 # def printKeys(request):
@@ -122,7 +136,7 @@ class TestGetKeys(object):
 
     def testGetKeysD02(self, printKeys, debug):
         d02Ks = ['k0:0', 'k0:1', 'k0:2', 'k1:0', 'k1:1', 'k1:2', 'k2:k0', 'k2:k1', 'k2:k2']
-        d02K = dict_json.getKeys(d02)
+        d02K = dict_json.getKeys(d022)
         print(f'keys: {d02K}') if printKeys else ''
         assert len(d02K) == len(d02Ks)
         assert d02K == d02Ks
@@ -131,7 +145,7 @@ class TestGetKeys(object):
         d02Ks = [['k0', '0'], ['k0', '1'], ['k0', '2'],
                  ['k1', '0'], ['k1', '1'], ['k1', '2'],
                  ['k2', 'k0'], ['k2', 'k1'], ['k2', 'k2']]
-        d02K = dict_json.getKeys(d02, seralize=False)
+        d02K = dict_json.getKeys(d022, seralize=False)
         print(f'keys: {d02K}') if printKeys else ''
         assert len(d02K) == len(d02Ks)
         assert d02K == d02Ks
@@ -257,52 +271,69 @@ class TestAddValue(object):
         fieldValue = dict_json.getValue(d01, key)
         assert fieldValue == newValue
 
-    def testD01KeyValueMissing(self):
-        key = 'k1n'
+    def testD012KeyValueMissing(self):
+        key = 'k1n:a'
         newValue = 'yyy'
         dict_json.setValue(d01, key, newValue)
         fieldValue = dict_json.getValue(d01, key)
         assert fieldValue == newValue
 
+    def testNormalKeyValueMissing(self):
+        key = 'c:cc'
+        newValue = 'yyy'
+        dict_json.setValue(normal_dict, key, newValue)
+        assert normal_dict['c']['cc'] == newValue
+
+    def testNormalKeyValueMissing(self):
+        key = 'c:cc'
+        newValue = 'yyy'
+        dict_json.setValue(normal_dict, key, newValue)
+        assert normal_dict['c']['cc'] == newValue
+
+    def testD01KeyValueMissing(self):
+        key = 'k1n'
+        newValue = 'yyy'
+        dict_json.setValue(d01, key, newValue)
+        fieldValue = dict_json.getValue(d01, key)
+        assert newValue == d01[key]
+
     def testD02KeyValueExists(self):
         key = 'd1'
         newValue = 'yyy'
         dict_json.setValue(d02, key, newValue)
-        fieldValue = dict_json.getValue(d02, key)
-        assert fieldValue == newValue
+        assert newValue == d02[key]
 
     def testD02KeyValueMissing(self):
         key = 'd1l'
         newValue = 'yyy'
         dict_json.setValue(d02, key, newValue)
         fieldValue = dict_json.getValue(d02, key)
-        assert fieldValue == newValue
+        assert newValue == d02[key]
 
     def testD02IndexIntValueMissing(self):
         key = ['k1', 1]
         newValue = 'yyy'
-        dict_json.setValue(d02, key, newValue)
-        fieldValue = dict_json.getValue(d02, key)
-        assert fieldValue == newValue
+        dict_json.setValue(d022, key, newValue)
+        assert newValue == d022[key[0]][key[1]]
 
     def testD02IndexStrValueMissing(self):
         # dict_json.DELIMITER = '\0'
-        key = dict_json.DELIMITER.join(['k1', '5'])
+        keys = ['k1', '5']
+        key = dict_json.DELIMITER.join(keys)
         newValue = 'yyy'
-        dict_json.setValue(d02, key, newValue)
-        fieldValue = dict_json.getValue(d02, key)
-        assert fieldValue == newValue
+        dict_json.setValue(d022, key, newValue)
+        assert newValue == d022[keys[0]][int(keys[1])]
 
     def testL05IndexValueExist(self):
-        key = dict_json.DELIMITER.join(['1', '1'])
+        keys = ['1', '1']
+        key = dict_json.DELIMITER.join(keys)
         newValue = 'yyy'
         dict_json.setValue(l05, key, newValue)
-        fieldValue = dict_json.getValue(l05, key)
-        assert fieldValue == newValue
+        assert newValue == l05[int(keys[0])][int(keys[1])]
 
     def testL05IndexValueMissing(self):
-        key = dict_json.DELIMITER.join(['1', '3'])
+        keys = ['1', '3']
+        key = dict_json.DELIMITER.join(keys)
         newValue = 'yyy'
         dict_json.setValue(l05, key, newValue)
-        fieldValue = dict_json.getValue(l05, key)
-        assert fieldValue == newValue
+        assert newValue == l05[int(keys[0])][int(keys[1])]

@@ -49,6 +49,88 @@ def setValue(json_dict_list, key, value):
     Add [] for missing keys when next is int
     add MyDict() for missing keys when next is not int
 
+    verify key:
+        is int: make list
+        is list: make copy
+        is other: split by delimiter
+
+    verify json_dict_list:
+        is list or dict:
+            set myDict
+        is other:
+
+    pop last_key
+
+    for each key
+        if can walk: walk to next myDict
+        else: add new node for key
+
+    if myDict is (dict or list):
+    else: add dict or list
+
+    myDict[last_key] = value
+
+    :param key: string of keys with ":" DELIMITER
+    :param value: value for last key
+    :return: None
+    """
+    if isinstance(key, int):
+        keys = [key]
+    elif isinstance(key, list):
+        keys = key.copy()
+    else:
+        keys = key.split(DELIMITER)
+    last_part_key = keys.pop()
+    my_dict = json_dict_list
+    logger.debug(f'keys: {list(keys)}, value: {value}')
+    tabs = ''
+    for part_key in keys:
+        tabs += '\t'
+        logger.debug(f'\tpart_key: {part_key}')
+        if isinstance(my_dict, dict):
+            if part_key not in my_dict:
+                my_dict[part_key] = ()
+            logger.debug(f'{tabs}part_key: {part_key}, my_dict[part_key]')
+        elif isinstance(my_dict, list):
+            part_key = int(part_key)
+            if part_key < len(my_dict):
+                my_dict += [()] * (part_key + 1 - len(my_dict))
+            logger.debug(f'{tabs}part_key: {part_key}, my_dict[part_key]')
+        else:
+            if my_dict == ():
+                if part_key.isnumeric():
+                    my_dict = [None] * int(part_key)
+                else:
+                    my_dict = {part_key: None}
+            else:
+                # could be an error
+                logger.error(f'{tabs}error: part_key: {part_key}, {my_dict}')
+                pass
+            logger.debug(f'{tabs}part_key: {part_key}, my_dict[part_key]')
+        prior_part_key = part_key
+        prior_my_dict = my_dict
+        my_dict = my_dict[part_key]
+    if isinstance(my_dict, list):
+        last_part_key = int(last_part_key)
+        if last_part_key >= len(my_dict):
+            my_dict += [()] * (last_part_key + 1 - len(my_dict))
+    elif not isinstance(my_dict, dict):
+        if last_part_key.isnumeric():
+            last_part_key = int(last_part_key)
+            if last_part_key >= len(my_dict):
+                prior_my_dict[prior_part_key] += [()] * (last_part_key + 1 - len(my_dict))
+        else:
+            prior_my_dict[prior_part_key] = dict()
+        my_dict = prior_my_dict[prior_part_key]
+    my_dict[last_part_key] = value
+    return
+
+def setValuex(json_dict_list, key, value):
+    """
+    Find last key in json_dict_list from key string
+    Add [] for missing keys when next is int
+    add MyDict() for missing keys when next is not int
+
     :param key: string of keys with ":" DELIMITER
     :param value: value for last key
     :return: None
@@ -63,6 +145,7 @@ def setValue(json_dict_list, key, value):
     prior_part_key = keys.pop(0)
     if isinstance(my_dict, list):
         prior_part_key = int(prior_part_key)
+    part_key = prior_part_key
     logger.debug(f'keys: {list(keys)}, value: {value}')
     tabs = ''
     for part_key in keys:
@@ -71,7 +154,7 @@ def setValue(json_dict_list, key, value):
         if isinstance(prior_part_key, str):
             if prior_part_key not in my_dict or my_dict[prior_part_key] is None:
                 # add [] or {} based on part_key isnumeric or letters
-                my_dict[prior_part_key] = {part_key, None}
+                my_dict[prior_part_key] = {part_key: None}
                 logger.debug(f'{tabs}part_key: {part_key}, my_dict[prior_part_key]')
         else:
             if prior_part_key >= len(my_dict) or my_dict[prior_part_key] is None:
@@ -81,15 +164,16 @@ def setValue(json_dict_list, key, value):
                 logger.debug(f'{tabs}part_key: {part_key}, numeric')
 
         my_dict = my_dict[prior_part_key]
-        prior_part_key = part_key if isinstance(my_dict, str) else int(part_key)
+        prior_part_key = part_key if isinstance(part_key, str) else int(part_key)
     if isinstance(my_dict, list):
-        if prior_part_key >= len(my_dict): # or my_dict[prior_part_key] is None:
+        part_key = int(part_key)
+        if part_key >= len(my_dict): # or my_dict[prior_part_key] is None:
             # add [] or {} based on part_key isnumeric or letters
-            part_key = int(part_key)
+            # part_key = int(part_key)
             my_dict += [None] * (part_key + 1 - len(my_dict))
             logger.debug(f'{tabs}part_key: {part_key}, numeric')
-    logger.debug(f'prior_part_key: {prior_part_key}, value: {value}')
-    my_dict[prior_part_key] = value
+    logger.debug(f'part_key: {part_key}, value: {value}')
+    my_dict[part_key] = value
     return
 
 
