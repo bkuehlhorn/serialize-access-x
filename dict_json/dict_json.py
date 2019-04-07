@@ -32,14 +32,22 @@ def getValue(json_dict_list, key):
         keys = key
     my_dict = json_dict_list
     logger.debug(f'keys: {list(keys)}')
-    for part_key in keys:
-        logger.debug(f'\tpart_key: {part_key}')
-        if isinstance(part_key, str):
-            if part_key.isnumeric():
-                part_key = int(part_key)
-            elif part_key == '':
-                return ''
-        my_dict = my_dict[part_key]
+    index = 0
+    try:
+        for part_key in keys:
+            logger.debug(f'\tpart_key: {part_key}')
+            if isinstance(part_key, str):
+                if part_key.isnumeric():
+                    part_key = int(part_key)
+                elif part_key == '':
+                    return ''
+            my_dict = my_dict[part_key]
+            index += 1
+    except Exception as e:
+        logger.error(f'Error for entry {index}:{part_key}')
+        e.args = (f'{e.args[0]} for entry {index}:{part_key}',)
+        print(e.args)
+        raise e
     logger.debug(f'my_dict: {my_dict}')
     return my_dict
 

@@ -248,13 +248,14 @@ class TestGetValue(object):
     def testJsonDictListMissing2(self): # Nested json dict, list, dict
         key = ['b', '3']
         j02 = json.loads(j02s)
-        with pytest.raises(IndexError):
+        with pytest.raises(IndexError, match=rf'list index out of range for entry 1:{key[1]}'):
             assert dict_json.getValue(j02, dict_json.DELIMITER.join(key))
 
     def testDictMissing(self): # Simple dict - missing key
         key = f'k1n'
-        with pytest.raises(KeyError):
-            assert dict_json.getValue(d01, key)
+        match_value = r'k1n for entry 0:{}'.format(key)
+        with pytest.raises(KeyError, match=rf'{key} for entry 0:{key}'): #.format()):
+                assert dict_json.getValue(d01, key)
 
 
 class TestAddValue(object):

@@ -58,18 +58,60 @@ Examples
       ...:     },
       ...: }
 
-   In [3]: getValue(normal_dict, 'a')
-   Out[3]: '0'
+   In [ 3]: normal_dict['a'] # native python
+   Out[ 3]: '0'
+   In [ 4]: getValue(normal_dict, 'a')
+   Out[ 4]: '0'
 
-   In [4]: getValue(normal_dict, 'b:a')
-   Out[4]: '1.0'
+   In [ 5]: normal_dict['b']['a'] # native python
+   Out[ 5]: '1.0'
+   In [ 6]: getValue(normal_dict, 'b:a')
+   Out[ 6]: '1.0'
 
-   In [5]: getValue(normal_dict, 'c:b:b')
-   Out[5]: '2.1.1'
+   In [ 7]: normal_dict['c']['b']['b'] # native python
+   Out[ 7]: '2.1.1'
+   In [ 8]: getValue(normal_dict, 'c:b:b')
+   Out[ 8]: '2.1.1'
 
-   In [6]: getValue(normal_dict, ['c', 'b', 'b'])
-   Out[6]: '2.1.1'
+   In [ 9]: normal_dict['c']['b']['b'] # native python
+   Out[ 9]: '2.1.1'
+   In [10]: getValue(normal_dict, ['c', 'b', 'b'])
+   Out[10]: '2.1.1'
 
+   In [2]: normal_list = [
+      ...:     '0',
+      ...:     [
+      ...:         '1.0',
+      ...:         '1.1',
+      ...:     ],
+      ...:     [
+      ...:         '2.0',
+      ...:         [
+      ...:             '2.1.0',
+      ...:             '2.1.1',
+      ...:         ],
+      ...:     ],
+      ...: }
+
+   In [ 3]: normal_dict['0'] # native python
+   Out[ 3]: '0'
+   In [ 4]: getValue(normal_dict, '0')
+   Out[ 4]: '0'
+
+   In [ 5]: normal_dict['1']['0'] # native python
+   Out[ 5]: '1.0'
+   In [ 6]: getValue(normal_dict, '1:0')
+   Out[ 6]: '1.0'
+
+   In [ 7]: normal_list[2][1][1]  # native python
+   Out[ 7]: '2.1.1'
+   In [ 8]: getValue(normal_dict, '2:1:1')
+   Out[ 8]: '2.1.1'
+
+   In [ 9]: normal_list[2][1][1]  # native python
+   Out[ 9]: '2.1.1'
+   In [10]: getValue(normal_dict, [2, 1, 1])
+   Out[10]: '2.1.1'
 Dict Json: setValue
 ```````
 .. code-block:: python
