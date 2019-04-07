@@ -26,7 +26,7 @@ It also provides some key joining methods (reducer), and you can choose the redu
 Documentation
 -------------
 
-Dict Json
+Dict Json: getValue
 ```````
 
 .. code-block:: python
@@ -74,6 +74,7 @@ Examples
    In [6]: getValue(normal_dict, ['c', 'b', 'b'])
    Out[6]: '2.1.1'
 
+Dict Json: setValue
 
 .. code-block:: python
 
@@ -122,6 +123,8 @@ Examples
    In [8]: normal_dict['c']['c']['b']
    Out[8]: 'newvalue newnode'
 
+
+Dict Json: getKeys
 .. code-block:: python
 
    def getKeys(json_dict_list, seralize=True):
@@ -142,9 +145,6 @@ Examples
    In [1]: from dict_json.dict_json import getKeys
 
    In [2]: normal_dict = {
-      ...:     'a': '0',
-
-   In [2]: normal_dict = {
       ...:    'a': '0',
       ...:    'b': {
       ...:        'a': '1.0',
@@ -160,6 +160,6 @@ Examples
    In [3]: getKeys(normal_dict)
    Out[3]: ['a', 'b:a', 'b:b', 'c:a', 'c:b:a', 'c:b:b']
 
+
    In [4]: getKeys(normal_dict, seralize=False)
    Out[4]: [['a'], ['b', 'a'], ['b', 'b'], ['c', 'a'], ['c', 'b', 'a'], ['c', 'b', 'b']]
-
