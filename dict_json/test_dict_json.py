@@ -337,3 +337,19 @@ class TestAddValue(object):
         newValue = 'yyy'
         dict_json.setValue(l05, key, newValue)
         assert newValue == l05[int(keys[0])][int(keys[1])]
+
+    def testL05ChangeNode(self):
+        keys = ['b']
+        key = dict_json.DELIMITER.join(keys)
+        newValue = 'yyy'
+        j02 = json.loads(j02s)
+        dict_json.setValue(j02, key, newValue)
+        assert newValue == j02[keys[0]]
+
+    def testL05ChangeNodeWithNode(self):
+        keys = ['b']
+        key = dict_json.DELIMITER.join(keys)
+        newValue = {'zz': 'yyy'}
+        j02 = json.loads(j02s)
+        dict_json.setValue(j02, key, newValue)
+        assert newValue == j02[keys[0]]

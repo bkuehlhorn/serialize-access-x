@@ -103,7 +103,6 @@ def setValue(json_dict_list, key, value):
                 else:
                     my_dict = {part_key: None}
             else:
-                # could be an error
                 logger.error(f'{tabs}error: part_key: {part_key}, {my_dict}')
                 pass
             logger.debug(f'{tabs}part_key: {part_key}, my_dict[part_key]')
@@ -124,58 +123,6 @@ def setValue(json_dict_list, key, value):
         my_dict = prior_my_dict[prior_part_key]
     my_dict[last_part_key] = value
     return
-
-def setValuex(json_dict_list, key, value):
-    """
-    Find last key in json_dict_list from key string
-    Add [] for missing keys when next is int
-    add MyDict() for missing keys when next is not int
-
-    :param key: string of keys with ":" DELIMITER
-    :param value: value for last key
-    :return: None
-    """
-    if isinstance(key, int):
-        keys = [key]
-    elif isinstance(key, list):
-        keys = key.copy()
-    else:
-        keys = key.split(DELIMITER)
-    my_dict = json_dict_list
-    prior_part_key = keys.pop(0)
-    if isinstance(my_dict, list):
-        prior_part_key = int(prior_part_key)
-    part_key = prior_part_key
-    logger.debug(f'keys: {list(keys)}, value: {value}')
-    tabs = ''
-    for part_key in keys:
-        tabs += '\t'
-        logger.debug(f'\tpart_key: {part_key}')
-        if isinstance(prior_part_key, str):
-            if prior_part_key not in my_dict or my_dict[prior_part_key] is None:
-                # add [] or {} based on part_key isnumeric or letters
-                my_dict[prior_part_key] = {part_key: None}
-                logger.debug(f'{tabs}part_key: {part_key}, my_dict[prior_part_key]')
-        else:
-            if prior_part_key >= len(my_dict) or my_dict[prior_part_key] is None:
-                # add [] or {} based on part_key isnumeric or letters
-                part_key = int(part_key)
-                my_dict[prior_part_key].append([None] * (part_key + 1 - len(my_dict)))
-                logger.debug(f'{tabs}part_key: {part_key}, numeric')
-
-        my_dict = my_dict[prior_part_key]
-        prior_part_key = part_key if isinstance(part_key, str) else int(part_key)
-    if isinstance(my_dict, list):
-        part_key = int(part_key)
-        if part_key >= len(my_dict): # or my_dict[prior_part_key] is None:
-            # add [] or {} based on part_key isnumeric or letters
-            # part_key = int(part_key)
-            my_dict += [None] * (part_key + 1 - len(my_dict))
-            logger.debug(f'{tabs}part_key: {part_key}, numeric')
-    logger.debug(f'part_key: {part_key}, value: {value}')
-    my_dict[part_key] = value
-    return
-
 
 def getKeys(json_dict_list, seralize=True):
     """
@@ -236,13 +183,6 @@ def getKeys(json_dict_list, seralize=True):
                     key = response[key]
                 else:
                     key = key if isinstance(key, str) else str(key)
-                    # if seralize:
-                    #     fullKeys.append(DELIMITER.join(fullKey + [key]))
-                    # else:
-                    #     fullKeys.append(fullKey + [key])
-
                     fullKeys.append(DELIMITER.join(fullKey + [key]) if seralize else fullKey + [key])
-
-                    key = None
         logger.debug(f'{tabs}*** last fullKey: {fullKeys[-1] if len(fullKeys) > 0 else  "start"}')
     return fullKeys

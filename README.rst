@@ -9,7 +9,6 @@ dict_json
 
 A flexible utility for accessing nested dict and list objects in Python with single searialized key.
 
-
 Introduction
 ------------
 This Python package provide functions to access nested dict and list objects.
@@ -25,7 +24,6 @@ It also provides some key joining methods (reducer), and you can choose the redu
 
 Documentation
 -------------
-
 Dict Json: getValue
 ```````
 .. code-block:: python
