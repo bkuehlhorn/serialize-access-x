@@ -28,7 +28,6 @@ Documentation
 
 Dict Json: getValue
 ```````
-
 .. code-block:: python
 
    def getValue(json_dict_list, key):
@@ -39,9 +38,9 @@ Dict Json: getValue
        :param key: string of keys with ":" DELIMITER
        :return: value of final key
        """
+
 Examples
 ::::::::
-
 .. code-block:: python
 
    In [1]: from dict_json.dict_json import getValue
@@ -75,7 +74,7 @@ Examples
    Out[6]: '2.1.1'
 
 Dict Json: setValue
-
+```````
 .. code-block:: python
 
    def setValue(json_dict_list, key, value):
@@ -88,9 +87,9 @@ Dict Json: setValue
        :param value: value for last key
        :return: None
        """
+
 Examples
 ::::::::
-
 .. code-block:: python
 
    In [1]: from dict_json.dict_json import setValue
@@ -123,8 +122,8 @@ Examples
    In [8]: normal_dict['c']['c']['b']
    Out[8]: 'newvalue newnode'
 
-
 Dict Json: getKeys
+```````
 .. code-block:: python
 
    def getKeys(json_dict_list, seralize=True):
@@ -139,7 +138,6 @@ Dict Json: getKeys
 
 Examples
 ::::::::
-
 .. code-block:: python
 
    In [1]: from dict_json.dict_json import getKeys
