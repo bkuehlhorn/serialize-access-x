@@ -79,13 +79,34 @@ Dict Json: setValue
 
    def setValue(json_dict_list, key, value):
        """
-       Find last key in json_dict_list from key string
-       Add [] for missing keys when next is int
-       add MyDict() for missing keys when next is not int
+    Find last key in json_dict_list from key string
+    Add [] for missing keys when next is int
+    add MyDict() for missing keys when next is not int
 
-       :param key: string of keys with ":" DELIMITER
-       :param value: value for last key
-       :return: None
+    verify key:
+        is int: make list
+        is list: make copy
+        is other: split by delimiter
+
+    verify json_dict_list:
+        is list or dict:
+            set myDict
+        is other:
+
+    pop last_key
+
+    for each key
+        if can walk: walk to next myDict
+        else: add new node for key
+
+    if myDict is (dict or list):
+    else: add dict or list
+
+    myDict[last_key] = value
+
+    :param key: string of keys with ":" DELIMITER
+    :param value: value for last key
+    :return: None
        """
 
 Examples
