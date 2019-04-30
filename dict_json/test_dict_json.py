@@ -2,6 +2,7 @@ import random
 import pytest
 from dict_json import dict_json
 import json
+
 # import yaml
 
 delimiter = dict_json.DELIMITER
@@ -10,6 +11,7 @@ delimiter = dict_json.DELIMITER
 
 # from .conftest import logging
 import logging
+
 # logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.DEBUG)
 from dict_json import dict_json
@@ -23,6 +25,8 @@ l(0:3, d
 d(4)
 
 """
+
+
 def d(*arg, n=1):
     """ Create a test dictionary
     Number of fields in dictionary
@@ -32,8 +36,9 @@ def d(*arg, n=1):
     """
     d = {}
     for x in range(n):
-        d[f'k{x}'] = 'x' + ('s' * x) if len(arg) == 0 else arg[x % len(arg)].copy()
+        d[f"k{x}"] = "x" + ("s" * x) if len(arg) == 0 else arg[x % len(arg)].copy()
     return d
+
 
 def l(*arg, n=1):
     """ Create test list
@@ -44,13 +49,14 @@ def l(*arg, n=1):
     :return:
     """
     if arg == ():
-        element = lambda x: 'x' + ('s' * x)
+        element = lambda x: "x" + ("s" * x)
     else:
         element = lambda x: arg[x % len(arg)].copy()
     ls = [None] * n
     for index in range(n):
         ls[index] = element(index)
     return ls
+
 
 d01 = d(n=3)
 d02 = d(n=3)
@@ -59,9 +65,9 @@ l01 = l(n=3)
 l02 = l(n=3)
 
 d01l = d(n=3)
-d01l['d0'] = l01
-d01l['d1'] = l02
-d01l['d2'] = d02
+d01l["d0"] = l01
+d01l["d1"] = l02
+d01l["d2"] = d02
 
 d022 = d(l01, l01, d01, n=3)
 
@@ -70,7 +76,7 @@ l04 = l(l01, n=3)
 l05 = l(l04, n=3)
 
 
-j01s = '''
+j01s = """
 {
 "a": 1,
 "b":
@@ -79,8 +85,8 @@ j01s = '''
         "d": 4
     }
 }
-'''
-j01Ks = ['a', 'b:c', 'b:d']
+"""
+j01Ks = ["a", "b:c", "b:d"]
 
 y01s = """
 a: 1
@@ -89,7 +95,7 @@ b:
     d: 4
 """
 
-j02s = '''
+j02s = """
 {
 "a": 1,
 "b":
@@ -104,8 +110,8 @@ j02s = '''
         }
     ]
 }
-'''
-j02Ks = ['a', 'b:0:c', 'b:0:d', 'b:1:c', 'b:1:d']
+"""
+j02Ks = ["a", "b:0:c", "b:0:d", "b:1:c", "b:1:d"]
 
 normal_dict = {
     'a': '0',
@@ -126,41 +132,42 @@ normal_dict = {
 # def printKeys(request):
 #     return request.config.getoption("--print")
 
+
 class TestGetKeys(object):
     def testGetKeysD01(self, printKeys, debug):
-        d01Ks = ['k0', 'k1', 'k2']
+        d01Ks = ["k0", "k1", "k2"]
         d01K = dict_json.getKeys(d01)
-        print(f'keys: {d01K}') if printKeys else ''
+        print(f"keys: {d01K}") if printKeys else ""
         assert len(d01K) == len(d01Ks)
         assert d01K == d01Ks
 
     def testGetKeysD02(self, printKeys, debug):
         d02Ks = ['k0:0', 'k0:1', 'k0:2', 'k1:0', 'k1:1', 'k1:2', 'k2:k0', 'k2:k1', 'k2:k2']
         d02K = dict_json.getKeys(d022)
-        print(f'keys: {d02K}') if printKeys else ''
+        print(f"keys: {d02K}") if printKeys else ""
         assert len(d02K) == len(d02Ks)
         assert d02K == d02Ks
 
     def testGetKeysD02List(self, printKeys, debug):
-        d02Ks = [['k0', '0'], ['k0', '1'], ['k0', '2'],
-                 ['k1', '0'], ['k1', '1'], ['k1', '2'],
+        d02Ks = [['k0', '0' ], ['k0', '1' ], ['k0', '2' ],
+                 ['k1', '0' ], ['k1', '1' ], ['k1', '2' ],
                  ['k2', 'k0'], ['k2', 'k1'], ['k2', 'k2']]
         d02K = dict_json.getKeys(d022, seralize=False)
-        print(f'keys: {d02K}') if printKeys else ''
+        print(f"keys: {d02K}") if printKeys else ""
         assert len(d02K) == len(d02Ks)
         assert d02K == d02Ks
 
     def testGetKeysL01(self, printKeys, debug):
-        l01Ks = ['0', '1', '2']
+        l01Ks = ["0", "1", "2"]
         l01K = dict_json.getKeys(l01)
-        print(f'keys: {l01K}') if printKeys else ''
+        print(f"keys: {l01K}") if printKeys else ""
         assert len(l01K) == len(l01Ks)
         assert l01K == l01Ks
 
     def testGetKeysL04(self, printKeys, debug):
-        l04Ks = ['0:0','0:1','0:2', '1:0', '1:1', '1:2', '2:0', '2:1', '2:2']
+        l04Ks = ["0:0", "0:1", "0:2", "1:0", "1:1", "1:2", "2:0", "2:1", "2:2"]
         l04K = dict_json.getKeys(l04)
-        print(f'keys: {l04K}') if printKeys else ''
+        print(f"keys: {l04K}") if printKeys else ""
         assert len(l04K) == len(l04Ks)
         assert l04K == l04Ks
 
@@ -169,21 +176,21 @@ class TestGetKeys(object):
                  '1:0:0', '1:0:1', '1:0:2', '1:1:0', '1:1:1', '1:1:2', '1:2:0', '1:2:1', '1:2:2',
                  '2:0:0', '2:0:1', '2:0:2', '2:1:0', '2:1:1', '2:1:2', '2:2:0', '2:2:1', '2:2:2',]
         l05K = dict_json.getKeys(l05)
-        print(f'keys: {l05K}') if printKeys else ''
+        print(f"keys: {l05K}") if printKeys else ""
         assert len(l05K) == len(l05Ks)
         assert l05K == l05Ks
 
     def testGetKeysj01(self, printKeys, debug):
         j01 = json.loads(j01s)
         j01K = dict_json.getKeys(j01)
-        print(f'keys: {j01K}') if printKeys else ''
+        print(f"keys: {j01K}") if printKeys else ""
         assert len(j01K) == len(j01Ks)
         assert j01K == j01Ks
 
     def testGetKeysj02(self, printKeys, debug):
         j02 = json.loads(j02s)
         j02K = dict_json.getKeys(j02)
-        print(f'keys: {j02K}') if printKeys else ''
+        print(f"keys: {j02K}") if printKeys else ""
         assert len(j02K) == len(j02Ks)
         assert j02K == j02Ks
 
@@ -207,55 +214,56 @@ class TestGetValue(object):
     Nested list, list, dict - missing third key
 
     """
-    def testDictSimpleExist(self): # Simple dict
-        key = f'k1'
+
+    def testDictSimpleExist(self):  # Simple dict
+        key = f"k1"
         fieldValue = dict_json.getValue(d01, key)
         assert fieldValue == d01[key]
 
-    def testDictListExist(self): # Nested dict, list-str
-        key = ['d1', '1']
+    def testDictListExist(self):  # Nested dict, list-str
+        key = ["d1", "1"]
         fieldValue = dict_json.getValue(d01l, dict_json.DELIMITER.join(key))
         assert fieldValue == d01l[key[0]][int(key[1])]
 
-    def testDictListIntExist(self): # Nested dict, list-int
-        key = ['d1', 1]
+    def testDictListIntExist(self):  # Nested dict, list-int
+        key = ["d1", 1]
         fieldValue = dict_json.getValue(d01l, key)
         assert fieldValue == d01l[key[0]][key[1]]
 
-    def testDictListIntL05Exist(self): # Nested dict, list-int
-        key = ['1', 1, '0']
+    def testDictListIntL05Exist(self):  # Nested dict, list-int
+        key = ["1", 1, "0"]
         fieldValue = dict_json.getValue(l05, key)
         assert fieldValue == l05[int(key[0])][int(key[1])][int(key[2])]
 
-    def testJsonDictListExist(self): # Nested json dict, list, dict
-        key = ['a']
+    def testJsonDictListExist(self):  # Nested json dict, list, dict
+        key = ["a"]
         j02 = json.loads(j02s)
         fieldValue = dict_json.getValue(j02, dict_json.DELIMITER.join(key))
         assert fieldValue == j02[key[0]]
 
-    def testJsonDictListExist2(self): # Nested json dict, list, dict
-        key = ['b', '1']
+    def testJsonDictListExist2(self):  # Nested json dict, list, dict
+        key = ["b", "1"]
         j02 = json.loads(j02s)
         fieldValue = dict_json.getValue(j02, dict_json.DELIMITER.join(key))
         assert fieldValue == j02[key[0]][int(key[1])]
 
-    def testJsonDictListMissingList(self): # Nested json dict, list, dict
-        key = ['a', '1']
+    def testJsonDictListMissingList(self):  # Nested json dict, list, dict
+        key = ["a", "1"]
         j02 = json.loads(j02s)
         with pytest.raises(TypeError):
             assert dict_json.getValue(j02, dict_json.DELIMITER.join(key))
 
-    def testJsonDictListMissing2(self): # Nested json dict, list, dict
-        key = ['b', '3']
+    def testJsonDictListMissing2(self):  # Nested json dict, list, dict
+        key = ["b", "3"]
         j02 = json.loads(j02s)
-        with pytest.raises(IndexError, match=rf'list index out of range for entry 1:{key[1]}'):
+        with pytest.raises(IndexError, match=rf"list index out of range for entry 1:{key[1]}"):
             assert dict_json.getValue(j02, dict_json.DELIMITER.join(key))
 
-    def testDictMissing(self): # Simple dict - missing key
-        key = f'k1n'
-        match_value = r'k1n for entry 0:{}'.format(key)
-        with pytest.raises(KeyError, match=rf'{key} for entry 0:{key}'): #.format()):
-                assert dict_json.getValue(d01, key)
+    def testDictMissing(self):  # Simple dict - missing key
+        key = f"k1n"
+        match_value = r"k1n for entry 0:{}".format(key)
+        with pytest.raises(KeyError, match=rf"{key} for entry 0:{key}"):  # .format()):
+            assert dict_json.getValue(d01, key)
 
 
 class TestAddValue(object):
@@ -265,92 +273,93 @@ class TestAddValue(object):
     Using d02
 
     """
+
     def testD01KeyValueExists(self):
-        key = 'k1l'
-        newValue = 'yyy'
+        key = "k1l"
+        newValue = "yyy"
         dict_json.setValue(d01, key, newValue)
         fieldValue = dict_json.getValue(d01, key)
         assert fieldValue == newValue
 
     def testD012KeyValueMissing(self):
-        key = 'k1n:a'
-        newValue = 'yyy'
+        key = "k1n:a"
+        newValue = "yyy"
         dict_json.setValue(d01, key, newValue)
         fieldValue = dict_json.getValue(d01, key)
         assert fieldValue == newValue
 
     def testNormalKeyValueMissing(self):
-        key = 'c:cc'
-        newValue = 'yyy'
+        key = "c:cc"
+        newValue = "yyy"
         dict_json.setValue(normal_dict, key, newValue)
-        assert normal_dict['c']['cc'] == newValue
+        assert normal_dict["c"]["cc"] == newValue
 
     def testNormalKeyValueMissing(self):
-        key = 'c:cc'
-        newValue = 'yyy'
+        key = "c:cc"
+        newValue = "yyy"
         dict_json.setValue(normal_dict, key, newValue)
-        assert normal_dict['c']['cc'] == newValue
+        assert normal_dict["c"]["cc"] == newValue
 
     def testD01KeyValueMissing(self):
-        key = 'k1n'
-        newValue = 'yyy'
+        key = "k1n"
+        newValue = "yyy"
         dict_json.setValue(d01, key, newValue)
         fieldValue = dict_json.getValue(d01, key)
         assert newValue == d01[key]
 
     def testD02KeyValueExists(self):
-        key = 'd1'
-        newValue = 'yyy'
+        key = "d1"
+        newValue = "yyy"
         dict_json.setValue(d02, key, newValue)
         assert newValue == d02[key]
 
     def testD02KeyValueMissing(self):
-        key = 'd1l'
-        newValue = 'yyy'
+        key = "d1l"
+        newValue = "yyy"
         dict_json.setValue(d02, key, newValue)
         fieldValue = dict_json.getValue(d02, key)
         assert newValue == d02[key]
 
     def testD02IndexIntValueMissing(self):
-        key = ['k1', 1]
-        newValue = 'yyy'
+        key = ["k1", 1]
+        newValue = "yyy"
         dict_json.setValue(d022, key, newValue)
         assert newValue == d022[key[0]][key[1]]
 
     def testD02IndexStrValueMissing(self):
         # dict_json.DELIMITER = '\0'
-        keys = ['k1', '5']
+        keys = ["k1", "5"]
         key = dict_json.DELIMITER.join(keys)
-        newValue = 'yyy'
+        newValue = "yyy"
         dict_json.setValue(d022, key, newValue)
         assert newValue == d022[keys[0]][int(keys[1])]
 
     def testL05IndexValueExist(self):
-        keys = ['1', '1']
+        keys = ["1", "1"]
         key = dict_json.DELIMITER.join(keys)
-        newValue = 'yyy'
+        newValue = "yyy"
         dict_json.setValue(l05, key, newValue)
         assert newValue == l05[int(keys[0])][int(keys[1])]
 
     def testL05IndexValueMissing(self):
-        keys = ['1', '3']
+        keys = ["1", "3"]
         key = dict_json.DELIMITER.join(keys)
-        newValue = 'yyy'
+        newValue = "yyy"
         dict_json.setValue(l05, key, newValue)
         assert newValue == l05[int(keys[0])][int(keys[1])]
 
     def testL05ChangeNode(self):
-        keys = ['b']
+        keys = ["b"]
         key = dict_json.DELIMITER.join(keys)
-        newValue = 'yyy'
+        newValue = "yyy"
         j02 = json.loads(j02s)
         dict_json.setValue(j02, key, newValue)
         assert newValue == j02[keys[0]]
 
     def testL05ChangeNodeWithNode(self):
-        keys = ['b']
+        keys = ["b"]
         key = dict_json.DELIMITER.join(keys)
-        newValue = {'zz': 'yyy'}
+        newValue = {"zz": "yyy"}
         j02 = json.loads(j02s)
         dict_json.setValue(j02, key, newValue)
         assert newValue == j02[keys[0]]
