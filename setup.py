@@ -16,7 +16,7 @@ tests_require = []
 description = "A flexible utility for accessing json objects in Python."
 
 long_description = """\
-Please visit  the `GitHub repository <https://github.com/bkuehlhorn/dict-json>`_
+Please visit  the `GitHub repository <https://github.com/bkuehlhorn/seralize-access>`_
 for more information.\n
 """
 with open('README.rst') as fp:
@@ -24,12 +24,12 @@ with open('README.rst') as fp:
 
 
 setup(
-    name='dict-json',
+    name='seralize-access',
     version="0.0.3.post1",
     description=description,
     long_description=long_description,
     author='Bernard Kuehlhorn',
-    url='https://github.com/bkuehlhorn/dict-json',
+    url='https://github.com/bkuehlhorn/seralize-access',
     setup_requires=setup_requires,
     install_requires=install_requires,
     tests_require=tests_require,

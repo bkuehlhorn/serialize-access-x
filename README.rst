@@ -1,5 +1,5 @@
-dict_json
-============
+seralize_access
+===============
 .. image:: https://img.shields.io/travis/bkuehlhorn/dict_json/master.svg
    :target: https://travis-ci.org/bkuehlhorn/dict_json
 .. image:: https://img.shields.io/pypi/v/dict_json.svg
@@ -18,14 +18,14 @@ Entries are accessed by string of delimited keys/indexes or list of keys/indexes
 
 * ``getValue(json_dict_list, key)`` returns value
 * ``addValue(json_dict_list, key, value)`` adds value to key entry, additional dict/list are created to access entry
-* ``getKeys(json_dict_list, seralize)`` returns list of seralized keys for each value in dict/list. ``seralize``=True returns strings. False returns list
+* ``getKeys(json_dict_list, seralize)`` returns list of seralized keys for each value in dict/list. seralize=True returns strings. False returns list
 
 It also provides some key joining methods (reducer), and you can choose the reducer you want or even implement your own reducer. You can also choose to invert the resulting flat dict.
 
 Documentation
 -------------
-Dict Json: getValue
-```````
+Seralize Access: getValue
+````````````````````````````
 .. code-block:: python
 
    def getValue(json_dict_list, key):
@@ -41,7 +41,7 @@ Examples
 ::::::::
 .. code-block:: python
 
-   In [1]: from dict_json.dict_json import getValue
+   In [1]: from seralize_access.seralize_access import getValue
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -112,8 +112,9 @@ Examples
    Out[ 9]: '2.1.1'
    In [10]: getValue(normal_dict, [2, 1, 1])
    Out[10]: '2.1.1'
-Dict Json: setValue
-```````
+
+Seralize Access: setValue
+````````````````````````````
 .. code-block:: python
 
    def setValue(json_dict_list, key, value):
@@ -152,7 +153,7 @@ Examples
 ::::::::
 .. code-block:: python
 
-   In [1]: from dict_json.dict_json import setValue
+   In [1]: from seralize_access.seralize_access import setValue
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -182,8 +183,8 @@ Examples
    In [8]: normal_dict['c']['c']['b']
    Out[8]: 'newvalue newnode'
 
-Dict Json: getKeys
-```````
+Seralize Access: getKeys
+````````````````````````````
 .. code-block:: python
 
    def getKeys(json_dict_list, seralize=True):
@@ -200,7 +201,7 @@ Examples
 ::::::::
 .. code-block:: python
 
-   In [1]: from dict_json.dict_json import getKeys
+   In [1]: from seralize_access.seralize_access import getKeys
 
    In [2]: normal_dict = {
       ...:    'a': '0',
