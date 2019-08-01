@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>dict_json &#8212; seralize-access 1.1.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">seralize-access 1.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dict-json">
+<h1>dict_json<a class="headerlink" href="#dict-json" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://badge.fury.io/py/dict_json"><img alt="Version" src="https://img.shields.io/pypi/v/dict_json.svg?" /></a> <a class="reference external" href="https://travis-ci.org/gmr/dict_json"><img alt="Status" src="https://img.shields.io/travis/gmr/dict_json.svg?" /></a> <a class="reference external" href="https://codecov.io/github/gmr/dict_json?branch=master"><img alt="Coverage" src="https://img.shields.io/codecov/c/github/gmr/dict_json.svg?" /></a></p>
+<p><strong>dict_json</strong> is a Python library for interacting with nested dicts and lists as a single
+level dict or list with delimited keys. FlatDict supports Python 3.6+.</p>
+<p>Jump to <a class="reference internal" href="#installation"><span class="std std-ref">Installation</span></a>, <a class="reference internal" href="#example"><span class="std std-ref">Example Use</span></a>, <a class="reference internal" href="#docs"><span class="std std-ref">Class Documentation</span></a>, or <span class="xref std std-ref">license</span>.</p>
+<p><em>For example:</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">foo</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span> <span class="s1">&#39;qux&#39;</span><span class="p">:</span> <span class="s1">&#39;corge&#39;</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><em>is represented as:</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;foo:bar&#39;</span><span class="p">:</span> <span class="s1">&#39;baz&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;foo:qux&#39;</span><span class="p">:</span> <span class="s1">&#39;corge&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><em>And can still be accessed as:</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">][</span><span class="s1">&#39;bar&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>and</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="p">[</span><span class="s1">&#39;foo:bar&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Additionally, lists and tuples are also converted into dicts using enumerate().</p>
+<p><em>For example:</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;list&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,]}</span>
+</pre></div>
+</div>
+<p><em>Will be flattened as follows:</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">flat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;list:0&#39;</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;list:1&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;list:2&#39;</span><span class="p">:</span> <span class="s1">&#39;c&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="installation">
+<span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install flatdict
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-use">
+<span id="example"></span><h2>Example Use<a class="headerlink" href="#example-use" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="kn">import</span> <span class="nn">dict_json</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;baz&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                          <span class="s1">&#39;qux&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                          <span class="s1">&#39;corge&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+                  <span class="s1">&#39;grault&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;baz&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                             <span class="s1">&#39;qux&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                             <span class="s1">&#39;corge&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}},</span>
+          <span class="s1">&#39;garply&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;baz&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;qux&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;corge&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}}}</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">dict_json</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="s1">&#39;foo:bar:baz&#39;</span><span class="p">))</span>
+
+<span class="n">dict_json</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;test:value:key&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">as_dict</span><span class="p">())</span>
+
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-dict_json">
+<span id="class-documentation"></span><span id="docs"></span><h2>Class Documentation<a class="headerlink" href="#module-dict_json" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">dict_json</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#example-use">Example Use</a></li>
+<li><a class="reference internal" href="#module-dict_json">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">seralize-access 1.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Bernard Kuehlhorn.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.0.
+    </div>
+  </body>
+</html>
