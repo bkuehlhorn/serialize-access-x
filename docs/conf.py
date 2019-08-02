@@ -41,7 +41,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'seralize-access'
+project = u'serialize-access'
 copyright = u'2018, Bernard Kuehlhorn'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -184,7 +184,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'seralize-access.tex', u'seralize-access Documentation',
+  ('index', 'serialize-access.tex', u'serialize-access Documentation',
    u'Bernard Kuehlhorn', 'manual'),
 ]
 
@@ -214,7 +214,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'seralize-access', u'seralize-access Documentation',
+    ('index', 'serialize-access', u'serialize-access Documentation',
      [u'Bernard Kuehlhorn'], 1)
 ]
 
@@ -228,8 +228,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'seralize-access', u'seralize-access Documentation',
-   u'Bernard Kuehlhorn', 'seralize-access', 'One line description of project.',
+  ('index', 'serialize-access', u'serialize-access Documentation',
+   u'Bernard Kuehlhorn', 'serialize-access', 'One line description of project.',
    'Miscellaneous'),
 ]
 
