@@ -1,7 +1,7 @@
 # content of conftest.py
 import pytest
 
-from seralize_access import seralize_access
+from serialize_access import serialize_access
 
 import logging
 
@@ -42,7 +42,7 @@ def cmdopt(request):
 
 @pytest.fixture(scope="module")
 def debug(request):
-    seralize_access.logging.basicConfig(level=logging.DEBUG) if request.config.getoption(
+    serialize_access.logging.basicConfig(level=logging.DEBUG) if request.config.getoption(
         "--debug"
     ) else ""
     return request.config.getoption("--debug")

@@ -138,7 +138,7 @@ def setValue(json_dict_list, key, value):
     return
 
 
-def getKeys(json_dict_list, seralize=True):
+def getKeys(json_dict_list, serialize=True):
     """
     get unique string of keys to values in response dict
     list use 0 for entry
@@ -198,7 +198,7 @@ def getKeys(json_dict_list, seralize=True):
                 else:
                     key = key if isinstance(key, str) else str(key)
                     fullKeys.append(
-                        DELIMITER.join(fullKey + [key]) if seralize else fullKey + [key]
+                        DELIMITER.join(fullKey + [key]) if serialize else fullKey + [key]
                     )
         logger.debug(
             f'{tabs}*** last fullKey: {fullKeys[-1] if len(fullKeys) > 0 else  "start"}'

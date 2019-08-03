@@ -1,4 +1,4 @@
-seralize_access
+serialize_access
 ===============
 .. image:: https://img.shields.io/travis/bkuehlhorn/dict_json/master.svg
    :target: https://travis-ci.org/bkuehlhorn/dict_json
@@ -18,13 +18,13 @@ Entries are accessed by string of delimited keys/indexes or list of keys/indexes
 
 * ``getValue(json_dict_list, key)`` returns value
 * ``addValue(json_dict_list, key, value)`` adds value to key entry, additional dict/list are created to access entry
-* ``getKeys(json_dict_list, seralize)`` returns list of seralized keys for each value in dict/list. seralize=True returns strings. False returns list
+* ``getKeys(json_dict_list, serialize)`` returns list of serialized keys for each value in dict/list. serialize=True returns strings. False returns list
 
 It also provides some key joining methods (reducer), and you can choose the reducer you want or even implement your own reducer. You can also choose to invert the resulting flat dict.
 
 Documentation
 -------------
-Seralize Access: getValue
+serialize Access: getValue
 ````````````````````````````
 .. code-block:: python
 
@@ -41,7 +41,7 @@ Examples
 ::::::::
 .. code-block:: python
 
-   In [1]: from seralize_access.seralize_access import getValue
+   In [1]: from serialize_access.serialize_access import getValue
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -113,7 +113,7 @@ Examples
    In [10]: getValue(normal_dict, [2, 1, 1])
    Out[10]: '2.1.1'
 
-Seralize Access: setValue
+serialize Access: setValue
 ````````````````````````````
 .. code-block:: python
 
@@ -153,7 +153,7 @@ Examples
 ::::::::
 .. code-block:: python
 
-   In [1]: from seralize_access.seralize_access import setValue
+   In [1]: from serialize_access.serialize_access import setValue
 
    In [2]: normal_dict = {
       ...:     'a': '0',
@@ -183,11 +183,11 @@ Examples
    In [8]: normal_dict['c']['c']['b']
    Out[8]: 'newvalue newnode'
 
-Seralize Access: getKeys
+serialize Access: getKeys
 ````````````````````````````
 .. code-block:: python
 
-   def getKeys(json_dict_list, seralize=True):
+   def getKeys(json_dict_list, serialize=True):
        """
        get unique string of keys to values in response dict
        list use 0 for entry
@@ -201,7 +201,7 @@ Examples
 ::::::::
 .. code-block:: python
 
-   In [1]: from seralize_access.seralize_access import getKeys
+   In [1]: from serialize_access.serialize_access import getKeys
 
    In [2]: normal_dict = {
       ...:    'a': '0',
@@ -219,5 +219,5 @@ Examples
    In [3]: getKeys(normal_dict)
    Out[3]: ['a', 'b:a', 'b:b', 'c:a', 'c:b:a', 'c:b:b']
 
-   In [4]: getKeys(normal_dict, seralize=False)
+   In [4]: getKeys(normal_dict, serialize=False)
    Out[4]: [['a'], ['b', 'a'], ['b', 'b'], ['c', 'a'], ['c', 'b', 'a'], ['c', 'b', 'b']]

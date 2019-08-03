@@ -1,9 +1,9 @@
-.. seralize-access documentation master file, created by
+.. serialize-access documentation master file, created by
    sphinx-quickstart on Sun Apr  7 19:18:24 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to seralize-access's documentation!
+Welcome to serialize-access's documentation!
 =====================================
 
 .. toctree::

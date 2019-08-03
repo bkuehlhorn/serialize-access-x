@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'seralize-access'
+project = 'serialize-access'
 copyright = '2019, Bernard Kuehlhorn'
 author = 'Bernard Kuehlhorn'
 
