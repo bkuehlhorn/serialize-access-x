@@ -5,7 +5,8 @@ from serialize_access import serialize_access
 
 import logging
 
-logging.basicConfig(level=logging.INFO)
+
+# logging.basicConfig(level=logging.INFO)
 
 
 def pytest_addoption(parser):
@@ -26,7 +27,9 @@ def pytest_generate_tests(metafunc):
 
     if "debug" in metafunc.fixturenames:
         if metafunc.config.getoption("debug"):
-            logging.basicConfig(level=logging.DEBUG)
+            serialize_access.logger.setLevel(serialize_access.logging.DEBUG)
+        else:
+            serialize_access.logger.setLevel(serialize_access.logging.INFO)
         # metafunc.parametrize("debug", metafunc.config.getoption('debug'))
 
     if "print" in metafunc.fixturenames:
@@ -42,9 +45,7 @@ def cmdopt(request):
 
 @pytest.fixture(scope="module")
 def debug(request):
-    serialize_access.logging.basicConfig(level=logging.DEBUG) if request.config.getoption(
-        "--debug"
-    ) else ""
+    serialize_access.logger.setLevel(serialize_access.logging.DEBUG) if request.config.getoption("--debug") else ""
     return request.config.getoption("--debug")
 
 
