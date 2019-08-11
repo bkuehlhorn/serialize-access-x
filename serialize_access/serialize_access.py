@@ -45,10 +45,8 @@ def getValue(json_dict_list, key):
                     return ""
             my_dict = my_dict[part_key]
             index += 1
-    except Exception as e:
-        logger.error(f"Error for entry {index}:{part_key}")
+    except (KeyError, IndexError) as e:
         e.args = (f"{e.args[0]} for entry {index}:{part_key}",)
-        print(e.args)
         raise e
     logger.debug(f"my_dict: {my_dict}")
     return my_dict
